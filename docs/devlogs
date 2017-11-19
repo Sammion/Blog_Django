@@ -1,0 +1,8 @@
+# 创建管理员账号
+python manage.py createsuperuser
+Email address: samqian163@163.com
+Username (leave blank to use 'shuai.qian'): admin
+Password: admin123
+# 数据更新操作
+python manage.py makemigrations
+python manage.py migrate
