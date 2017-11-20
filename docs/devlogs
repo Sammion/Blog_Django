@@ -6,3 +6,5 @@ Password: admin123
 # 数据更新操作
 python manage.py makemigrations
 python manage.py migrate
+# 创建新的应用
+python manage.py startapp account
