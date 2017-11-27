@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import UserProfile
+from .models import UserProfile, UserInfo
 
 
 # 登陆表单
@@ -29,3 +29,9 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ("cellphone", "birth", "hobby")
+
+
+class UserInfoForm(forms.ModelForm):
+    class Meta:
+        model = UserInfo
+        fields = ('school', 'company', 'profession', 'address', 'aboutme')
