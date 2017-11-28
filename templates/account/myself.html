@@ -7,7 +7,7 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-4 text-right"><span>用户名：</span></div>
-                <div class="col-md-8 text-left">{{ user.name }}</div>
+                <div class="col-md-8 text-left">{{ user.username }}</div>
             </div>
             <div class="row">
                 <div class="col-md-4 text-right"><span>邮箱：</span></div>
@@ -45,9 +45,18 @@
                 <div class="col-md-4 text-right"><span>个人简介：</span></div>
                 <div class="col-md-8 text-left">{{ userinfo.aboutme }}</div>
             </div>
+            <div class="row">
+                <a href="{% url 'account:my_information_edit' %}"><button class="btn btn-lg">编辑我的个人信息</button> </a>
+            </div>
         </div>
         <div class="col-md-6">
-            <p>picture</p>
+            {% load staticfiles %}
+            <div style="margin-right: 100px">
+                <img name="user_face" src="{% static 'images/code.jpg' %}" class="img-circle" width="270px" id="my_photo">
+            </div>
+            <div style="margin-right: 100px">
+                <button class="btn btn-primary btn-lg" id="upload-image" onclick="upload_image_layer()">上传我的头像</button>
+            </div>
         </div>
     </div>
 </div>
