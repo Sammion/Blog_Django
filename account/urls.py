@@ -26,4 +26,6 @@ urlpatterns = [
     url(r'^password-reset-complete/$', auth_views.password_reset_complete, name='password_reset_complete'),
     url(r'^my-information/$', views.myself, name="my_information"),
     url(r'^edit-my-information/$', views.myself_edit, name="my_information_edit"),
+    url(r'^my-image/$', views.my_images, name='my_image'),
+
 ]

@@ -102,3 +102,15 @@ def myself_edit(request):
                      'address': userinfo.address, 'aboutme': userinfo.aboutme})
         return render(request, 'account/myself_edit.html',
                       {'user_form': user_form, 'userprofile_form': userprofile_form, 'userinfo_form': userinfo_form})
+
+
+@login_required(login_url='/account/login')
+def my_images(request):
+    if request == 'POST':
+        img = request.POST['img']
+        userinfo = UserInfo.objects.get(user=request.user.id)
+        userinfo.photo = img
+        userinfo.save()
+        return HttpResponse('1')
+    else:
+        return render(request, 'account/imagecrop.html')
