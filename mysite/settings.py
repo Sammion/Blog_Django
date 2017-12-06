@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'account',
+    'article',
+
 ]
 
 MIDDLEWARE = [
@@ -120,3 +122,11 @@ STATICFILES_DIRS = (
 )
 # 登陆后重定向
 LOGIN_REDIRECT_URL = '/blog/'
+
+# 配置邮箱
+EMAIL_HOST = 'smtp.163.com'
+EMAIL_HOST_USER = 'qianshuai104@163.com'
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = '25'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'qianshuai104@163.com'
