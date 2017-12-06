@@ -7,7 +7,7 @@
     </div>
     <div class="action">
         <div class="new-contentarea" tc><a href="javascript:void(0)" class="upload-img">
-            <label for="upload-file">请选择图片··· ···</label>
+            <label for="upload-file">请选择图片···</label>
         </a>
             <input type="file" class="" name="upload-file" id="upload-file"/>
         </div>
@@ -38,16 +38,20 @@
             }
             reader.readAsDataURL(this.files[0]);
             this.files = [];
-
         })
         $('#btnCrop').on('click', function () {
-            //alert("图案上传成功！");
+            alert("图案上传成功！");
             $.ajax({
                 url:'{% url "account:my_image" %}',
                 type:'POST',
                 data:{"img":img},
                 success:function (e) {
-                    location.href="{% url 'account:my_information' %}"
+                    //location.href="{% url 'account:my_information' %}"
+                    if(e == '1'){
+                        parent.location.reload();
+                    }else {
+                        alert('对不起，上传图片失败！')
+                    }
                 }
             })
         })
@@ -55,19 +59,19 @@
             img = cropper.getDataURL();
             $('.cropped').html('');
             $('.cropped').append('<img src="' + img + '" align="absmiddle" style="width:180px;margin-top:4px;' +
-                'border-radius:180px;box-shadow:0px 0px 12px #7E7E7E;"><p>180px*180px</p>')
-            $('.cropped').append('<img src="' + img + '" align="absmiddle" style="width:128px;margin-top:4px;' +
-                'border-radius:180px;box-shadow:0px 0px 12px #7E7E7E;"><p>128px*128px</p>')
+                'border-radius:180px;box-shadow:0px 0px 12px #7E7E7E;"><p>180px*180px</p>');
+            $('.cropped').append('<img src="' + img + '" align="absmiddle" style="width:128px;margin-t;op:4px;' +
+                'border-radius:180px;box-shadow:0px 0px 12px #7E7E7E;"><p>128px*128px</p>');
             $('.cropped').append('<img src="' + img + '" align="absmiddle" style="width:64px;margin-top:4px;' +
-                'border-radius:180px;box-shadow:0px 0px 12px #7E7E7E;"><p>64px*64px</p>')
+                'border-radius:180px;box-shadow:0px 0px 12px #7E7E7E;"><p>64px*64px</p>');
             }
-            $(".imageBox").on("mouseup",function () {
+        $(".imageBox").on("mouseup",function () {
                 getImg();
-            })
-            $('#btnZoomIn').on('click',function () {
+            });
+        $('#btnZoomIn').on('click',function () {
                 cropper.zoomIn();
             })
-            $('#btnZoomOut').on('click',function () {
+        $('#btnZoomOut').on('click',function () {
                 cropper.zoomOut();
             })
     });
