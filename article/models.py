@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.utils.text import slugify
-
+from urllib.parse import quote
 
 # Create your models here.
 
@@ -35,7 +35,9 @@ class ArticlePost(models.Model):
 
     # 重写保存方法
     def save(self, *args, **kargs):
-        self.slug = slugify(self.title)
+        # print('==========================>',self.title.decode('utf8'))
+
+        self.slug = quote(self.title)
         super(ArticlePost, self).save(*args, **kargs)
 
     # 获取某个文章的url
