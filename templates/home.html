@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% block title %}首页{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h1>欢迎来到疯人院！</h1>
+        <h2>面包会有的，但是爱情你想都别想！</h2>
+        {% load staticfiles %}
+        <img src="{% static 'images/hello.jpg' %}">
+    </div>
+{% endblock %}
