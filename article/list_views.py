@@ -2,6 +2,10 @@ from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import ArticleColumn, ArticlePost
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+from django.http import HttpResponse
 
 
 def article_titles(request, username=None):
@@ -32,3 +36,21 @@ def article_titles(request, username=None):
     else:
         return render(request, "article/list/article_titles.html",
                       {"articles": articles, "page": current_page})
+
+
+@login_required(login_url='/account/login')
+@csrf_exempt
+@require_POST
+def like_article(request):
+    article_id = request.POST.get('id')
+    action = request.POST.get('action')
+    if article_id and action:
+        try:
+            article = ArticlePost.objects.get(id=article_id)
+            if action == 'like':
+                article.users_like.add(request.user)
+                return HttpResponse("2")
+            else:
+                return HttpResponse("1")
+        except:
+            return HttpResponse("no")
