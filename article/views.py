@@ -87,7 +87,7 @@ def article_list(request):
     articles_list = ArticlePost.objects.filter(author=request.user)
     paginator = Paginator(articles_list, 3)
     page = request.GET.get('page')
-    print('==================', page)
+    # print('==================', page)
     try:
         current_page = paginator.page(page)
         articles = current_page.object_list

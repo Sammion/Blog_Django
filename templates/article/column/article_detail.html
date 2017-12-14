@@ -17,7 +17,7 @@
             <textarea id="append-test" style="display:none;">
                 {{ article.body }}
             </textarea>
-        </div>
+            </div>
             <div>
                 <p class="text-center">
                     <a onclick="like_article({{ article.id }}, 'like')" href="#"><span
@@ -46,32 +46,32 @@
         <script type="text/javascript" src="{% static 'js/layer.js' %}"></script>
         <script type="text/javascript">
             $(function () {
-            editormd.markdownToHTML("editormd-view", {
-                htmlDecode: "style,script,iframe",
-                emoji: true,
-                taskList: true,
-                tex: true,
-                flowChart: true,
-                sequenceDiagram: true,
+                editormd.markdownToHTML("editormd-view", {
+                    htmlDecode: "style,script,iframe",
+                    emoji: true,
+                    taskList: true,
+                    tex: true,
+                    flowChart: true,
+                    sequenceDiagram: true,
+                });
+
             });
-
-        });
-        function like_article(id, action) {
-            $.ajax({
-                url:"{% url 'article:like_article' %}",
-                type:"POST",
-                data:{"id":id,"action":action},
-                success:function (e) {
-                    if(e==1){
-                        layer.msg("你竟然会点赞！")
-                    }else{
-                        layer.msg("看来我写的还不够好呀！")
-                        window.location.reload()
+            function like_article(id, action) {
+                $.ajax({
+                    url: "{% url 'article:like_article' %}",
+                    type: "POST",
+                    data: {"id": id, "action": action},
+                    success: function (e) {
+                        if (e == 1) {
+                            layer.msg("你竟然会点赞！")
+                        } else {
+                            layer.msg("看来我写的还不够好呀！")
+                            window.location.reload()
+                        }
                     }
-                }
 
-            })
-        }
+                })
+            }
         </script>
     {% endwith %}
 {% endblock %}
