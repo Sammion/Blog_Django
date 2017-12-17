@@ -140,3 +140,9 @@ EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = '25'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'qianshuai104@163.com'
+
+
+# 配置Redis
+REDIS_HOST = 'localhost'
+REDIS_PORT = '6379'
+REDIS_DB = 0

@@ -9,6 +9,10 @@ from .forms import ArticleColumnForm, ArticlePostForm
 from django.shortcuts import get_object_or_404
 # 分页功能
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+import redis
+from django.conf import settings
+
+r = redis.StrictRedis(host=settings.REDIS_HOST, port=settings.REDIS_PORT, db=settings.REDIS_DB)
 
 
 # Create your views here.
@@ -103,7 +107,8 @@ def article_list(request):
 @login_required(login_url='/account/login')
 def article_detail(request, id, slug):
     article = get_object_or_404(ArticlePost, id=id, slug=slug)
-    return render(request, "article/column/article_detail.html", {"article": article})
+    article_views = r.incr("article:{}:views".format(article.id))
+    return render(request, "article/column/article_detail.html", {"article": article, "total_views": article_views})
 
 
 @login_required(login_url='/account/login')

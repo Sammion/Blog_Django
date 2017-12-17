@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.utils.text import slugify
 from urllib.parse import quote
 import uuid
+# pip install redis
 
 # Create your models here.
 

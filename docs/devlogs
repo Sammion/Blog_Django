@@ -8,3 +8,14 @@ python manage.py makemigrations
 python manage.py migrate
 # 创建新的应用
 python manage.py startapp account
+#安装MySQL驱动
+pip install pymysql
+CentOS 6安装Redis
+wget http://download.redis.io/releases/redis-4.0.6.tar.gz
+tar zxvf redis-4.0.6.tar.gz
+
+Windows安装Redis
+下载地址：https://github.com/MicrosoftArchive/redis/releases
+
+#安装redis库
+pip install redis
