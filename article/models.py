@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.utils.text import slugify
 from urllib.parse import quote
-
+import uuid
 
 # Create your models here.
 
@@ -19,8 +19,8 @@ class ArticleColumn(models.Model):
 
 class ArticlePost(models.Model):
     author = models.ForeignKey(User, related_name="article")
-    title = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=500)
+    title = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=200)
     column = models.ForeignKey(ArticleColumn, related_name='article_column')
     body = models.TextField()
     created = models.DateTimeField(default=timezone.now())
@@ -39,7 +39,8 @@ class ArticlePost(models.Model):
     def save(self, *args, **kargs):
         # print('==========================>',self.title.decode('utf8'))
 
-        self.slug = quote(self.title)
+        # self.slug = quote(self.title)
+        self.slug = uuid.uuid1()
         super(ArticlePost, self).save(*args, **kargs)
 
     # 获取某个文章的url

@@ -9,21 +9,22 @@
                 <p>
                     <a href="{% url 'article:author_articles' article.author.username %}">{{ article.author.username }}</a>
                     <span style="margin-left: 20px;"
-                          class="glyphicon glyphicon-thumbs-up">{{ total_likes }}赞{{ total_likes| pluralize }}</span>
+                          class="glyphicon glyphicon-thumbs-up">{{ total_likes }}like{{ total_likes| pluralize }}</span>
                 </p>
             </header>
             <link rel="stylesheet" href="{% static 'editor/css/editormd.preview.css' %}"/>
             <div id="editormd-view">
-            <textarea id="append-test" style="display:none;">
-                {{ article.body }}
-            </textarea>
+                <textarea id="append-test" style="display:none;">
+                    {{ article.body }}
+                </textarea>
             </div>
             <div>
                 <p class="text-center">
                     <a onclick="like_article({{ article.id }}, 'like')" href="#"><span
-                            class="glyphicon glyphicon-thumbs-up"> 赞 </span> </a>
+                            class="glyphicon glyphicon-thumbs-up">赞一下！</span> </a>
+
                     <a onclick="like_article({{ article.id }}, 'unlike')" href="#"><span
-                            class="glyphicon glyphicon-thumbs-down"> 嘘</span> </a>
+                            class="glyphicon glyphicon-thumbs-down">嘘一下！</span> </a>
                 </p>
             </div>
             <div>
@@ -35,6 +36,8 @@
                 {% endfor %}
             </div>
         </div>
+
+        <script src='{% static "editor/lib/marked.min.js" %}'></script>
         <script src="{% static 'js/jquery.js' %}"></script>
         <script src="{% static 'editor/lib/prettify.min.js' %}"></script>
         <script src="{% static 'editor/lib/raphael.min.js' %}"></script>

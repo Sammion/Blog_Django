@@ -49,8 +49,8 @@ def like_article(request):
             article = ArticlePost.objects.get(id=article_id)
             if action == 'like':
                 article.users_like.add(request.user)
-                return HttpResponse("2")
-            else:
                 return HttpResponse("1")
+            else:
+                return HttpResponse("2")
         except:
             return HttpResponse("no")
