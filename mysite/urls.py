@@ -22,6 +22,6 @@ urlpatterns = [
     url(r'^blog/', include('blog.urls', namespace='blog', app_name='blog')),
     url(r'^account/', include('account.urls', namespace='account', app_name='account')),
     url(r'^article/', include('article.urls', namespace='article', app_name='article')),
-    url(r'^home/', TemplateView.as_view(template_name="home.html")),
+    url(r'^home/$', TemplateView.as_view(template_name="home.html")),
 
 ]

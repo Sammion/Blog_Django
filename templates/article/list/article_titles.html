@@ -1,9 +1,12 @@
 {% extends "base.html" %}
+{% load article_tags %}
+
 {% load staticfiles %}
 {% block title %}文章列表{% endblock %}
 {% block content %}
     <div class="row text-center vertical-middle-sm">
         <h1>书读的多没朋友，读的少都是酒肉朋友！</h1>
+        <p>这里已经有{% total_articles %}篇文章供你阅读！</p>
     </div>
     <div class="container">
         {% for article in articles %}
