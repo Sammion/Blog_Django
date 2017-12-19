@@ -5,6 +5,8 @@ from django.utils import timezone
 from django.utils.text import slugify
 from urllib.parse import quote
 import uuid
+
+
 # pip install redis
 
 # Create your models here.
@@ -47,3 +49,17 @@ class ArticlePost(models.Model):
     # 获取某个文章的url
     def get_absolute_url(self):
         return reverse("article:article_detail", args=[self.id, self.slug])
+
+
+class Comment(models.Model):
+    article = models.ForeignKey(ArticlePost, related_name="comments")
+    commentator = models.CharField(max_length=90)
+    body = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('-created',)
+
+    def __str__(self):
+        return "commented by {0} on {1}.".format(self.commentator.username, self.article)
+

@@ -4,8 +4,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.http import HttpResponse
 
-from .models import ArticleColumn, ArticlePost
-from .forms import ArticleColumnForm, ArticlePostForm
+from .models import ArticleColumn, ArticlePost, Comment
+from .forms import ArticleColumnForm, ArticlePostForm, CommentForm
 from django.shortcuts import get_object_or_404
 # 分页功能
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -91,7 +91,6 @@ def article_list(request):
     articles_list = ArticlePost.objects.filter(author=request.user)
     paginator = Paginator(articles_list, 3)
     page = request.GET.get('page')
-    # print('==================', page)
     try:
         current_page = paginator.page(page)
         articles = current_page.object_list
@@ -108,13 +107,28 @@ def article_list(request):
 def article_detail(request, id, slug):
     article = get_object_or_404(ArticlePost, id=id, slug=slug)
     article_views = r.incr("article:{}:views".format(article.id))
+    # rank自增加1
     r.zincrby('article_ranking', article.id, 1)
+    # 获取排名前十的文章
     article_ranking = r.zrange('article_ranking', 0, -1, desc=True)[:10]
     article_ranking_ids = [int(id) for id in article_ranking]
+    # id__in条件查询，过滤选择需要的id对应的article返回给most_viewed
     most_viewed = list(ArticlePost.objects.filter(id__in=article_ranking_ids))
+    # 根据关键字排序
     most_viewed.sort(key=lambda x: article_ranking_ids.index(x.id))
+
+    if request.method == "POST":
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.article = article
+            new_comment.save()
+    else:
+        comment_form = CommentForm()
+
     return render(request, "article/column/article_detail.html",
-                  {"article": article, "total_views": article_views, 'most_viewed': most_viewed})
+                  {"article": article, "total_views": article_views, 'most_viewed': most_viewed,
+                   "comment_form": comment_form})
 
 
 @login_required(login_url='/account/login')
