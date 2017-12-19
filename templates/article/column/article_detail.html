@@ -125,9 +125,20 @@
                     </li>
                 {% endfor %}
             </ol>
+            <hr>
             <p class="text-center">
             <h3>最新发表的文章</h3></p>
             {% lastest_articles 2 %}
+            <hr>
+            <p class="text-center"><h3>最多评论的文章</h3></p>
+            {% most_commented_articles as most_comments %}
+            <ul>
+                {% for comment_article in most_comments %}
+                    <li>
+                        <a href="{{ comment_article.get_absolute_url }}">{{ comment_article.title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 {% endblock %}
