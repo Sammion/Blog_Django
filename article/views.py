@@ -109,9 +109,12 @@ def article_detail(request, id, slug):
     article = get_object_or_404(ArticlePost, id=id, slug=slug)
     article_views = r.incr("article:{}:views".format(article.id))
     r.zincrby('article_ranking', article.id, 1)
-    article_ranking = r.zscore('article_ranking',article.id)
-    # print('article_ranking=====================>',article_ranking)
-    return render(request, "article/column/article_detail.html", {"article": article, "total_views": article_views})
+    article_ranking = r.zrange('article_ranking', 0, -1, desc=True)[:10]
+    article_ranking_ids = [int(id) for id in article_ranking]
+    most_viewed = list(ArticlePost.objects.filter(id__in=article_ranking_ids))
+    most_viewed.sort(key=lambda x: article_ranking_ids.index(x.id))
+    return render(request, "article/column/article_detail.html",
+                  {"article": article, "total_views": article_views, 'most_viewed': most_viewed})
 
 
 @login_required(login_url='/account/login')
