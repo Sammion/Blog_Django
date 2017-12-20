@@ -27,7 +27,7 @@
                 <tr id={{ forloop.counter }}>
                     <td>{{ forloop.counter }}</td>
                     <td>{{ article_tag.tag }}</td>
-                    <td><a name="delete" href="javascript:" onclick="del_tag(this,{{ article_tag.id }})"><span
+                    <td><a name="delete" href="javascript:" onclick="del_article_tag(this,{{ article_tag.id }})"><span
                             class="glyphicon glyphicon-trash"></span></a></td>
                 </tr>
                 {% empty %}
