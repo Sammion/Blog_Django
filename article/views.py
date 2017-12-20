@@ -4,8 +4,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.http import HttpResponse
 
-from .models import ArticleColumn, ArticlePost, Comment
-from .forms import ArticleColumnForm, ArticlePostForm, CommentForm
+from .models import ArticleColumn, ArticlePost, Comment, ArticleTag
+from .forms import ArticleColumnForm, ArticlePostForm, CommentForm, ArticleTagForm
 from django.shortcuts import get_object_or_404
 # 分页功能
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -57,6 +57,40 @@ def del_article_column(request):
     try:
         line = ArticleColumn.objects.get(id=column_id)
         line.delete()
+        return HttpResponse("1")
+    except:
+        return HttpResponse("2")
+
+
+@login_required(login_url='/account/login')
+@csrf_exempt
+def article_tag(request):
+    if request.method == "GET":
+        article_tags = ArticleTag.objects.filter(author=request.user)
+        article_tag_form = ArticleTagForm()
+        return render(request, "article/tag/tag_list.html",
+                      {"article_tags": article_tags, "article_tag_form": article_tag_form})
+    elif request.method == "POST":
+        tag_post_form = ArticleTagForm(data=request.POST)
+        if tag_post_form.is_valid():
+            try:
+                new_tag = tag_post_form.save(commit=False)
+                new_tag.author = request.user
+                new_tag.save()
+            except:
+                return HttpResponse("The data cannot be saved")
+        else:
+            return HttpResponse("Sorry, the form is not valid")
+
+
+@login_required(login_url='/account/login')
+@require_POST
+@csrf_exempt
+def del_article_tag(request):
+    tag_id = request.POST['tag_id']
+    try:
+        tag = ArticleTag.objects.get(id=tag_id)
+        tag.delete()
         return HttpResponse("1")
     except:
         return HttpResponse("2")
