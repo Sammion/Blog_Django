@@ -77,6 +77,7 @@ def article_tag(request):
                 new_tag = tag_post_form.save(commit=False)
                 new_tag.author = request.user
                 new_tag.save()
+                return HttpResponse('1')
             except:
                 return HttpResponse("The data cannot be saved")
         else:
