@@ -1,11 +1,10 @@
 # 创建管理员账号
 python manage.py createsuperuser
-Email address: samqian163@163.com
-Username (leave blank to use 'shuai.qian'): admin
-Password: admin123
 # 数据更新操作
 python manage.py makemigrations
 python manage.py migrate
+# 启动服务
+python manage.py runserver
 # 创建新的应用
 python manage.py startapp account
 #安装MySQL驱动
@@ -18,4 +17,5 @@ Windows安装Redis
 下载地址：https://github.com/MicrosoftArchive/redis/releases
 
 #安装redis库
-pip install redis
+pip install redis==2.10.6
+pip install Pillow==5.2.0
